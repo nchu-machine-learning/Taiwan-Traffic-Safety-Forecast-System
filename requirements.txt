@@ -1,0 +1,10 @@
+pandas     
+numpy
+matplotlib
+torch   
+transformers
+datasets   
+tqdm      
+pypinyin  
+dtaidistance
+scikit-learn
