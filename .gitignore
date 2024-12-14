@@ -1,4 +1,4 @@
-output/result/*
-figure/*
-output/loss.pkl
+figure/
+output/
 .venv/
+**/__pycache__/
