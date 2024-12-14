@@ -1,6 +1,10 @@
 # Running the server
 - main.py: main.py contains the flask code is placed
-- Activate the virtual environment containing all the dependencies. In the command, type <pre>flask run</pre>  in the command
+- Activate the virtual environment containing all the dependencies. In the command, type
+```bash
+ flask run
+```
+in the command
 # Running the Experiment
 
 To explore the experiment setup, navigate to the `experiment` directory:
@@ -23,3 +27,4 @@ To install all required dependencies, execute:
 
 ```bash
 pip install -r requirements.txt
+```
