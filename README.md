@@ -2,7 +2,7 @@
 - main.py: main.py contains the flask code is placed
 - Activate the virtual environment containing all the dependencies. In the command, type
 ```bash
- flask run
+python main.py
 ```
 in the command
 # Running the Experiment
