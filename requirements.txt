@@ -8,3 +8,6 @@ tqdm
 pypinyin  
 dtaidistance
 scikit-learn
+flask
+python-dotenv
+accelerate

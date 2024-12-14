@@ -25,7 +25,8 @@ def forecast(
             'config': {}
         },
         num_of_days: int = 30,
-        device: torch.device = torch.device('cpu')
+        device: torch.device = torch.device('cpu'),
+        model_params_directory: str = '../output/result/'
     ) -> tuple[list, str]:
     '''
     Forecast future values for a specified city using a selected model (ML or LLM-based).
@@ -62,6 +63,8 @@ def forecast(
     device : torch.device, default = torch.device('cpu')
         The computing device on which the model runs. Useful for LLM models (e.g., "cuda:0").
 
+    model_params_directory : str, default = '../output/result/'
+        The target directory where the GPT model's parameters are placed.
     Returns
     -------
     tuple[list, str]
@@ -127,7 +130,7 @@ def forecast(
         # For LLM (GPT), convert city name to pinyin and load/fine-tune GPT model
         trainer, model, final_segment = GPT_fit(
             training_data, 
-            checkpoint_dir='../output/result/' + roman_repre,
+            checkpoint_dir=model_params_directory + roman_repre,
             trained=True,
             device=device
         )

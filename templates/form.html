@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forecast Input Form</title>
+</head>
+<body>
+    <h1>Forecast Input Form</h1>
+    <form action="/basic-end-to-end-forecasting" method="POST">
+        <label for="city_name">City Name:</label><br>
+        <input type="text" id="city_name" name="city_name" value="臺北市"><br><br>
+
+        <label for="model_name">Model Name:</label><br>
+        <input type="text" id="model_name" name="model_name" value="GPT"><br><br>
+
+        <label for="lookback">Lookback:</label><br>
+        <input type="number" id="lookback" name="lookback" value="150"><br><br>
+
+        <label for="num_of_days">Number of Days:</label><br>
+        <input type="number" id="num_of_days" name="num_of_days" value="30"><br><br>
+
+        <label for="device">Device:</label><br>
+        <select id="device" name="device">
+            <option value="cpu">CPU</option>
+            <option value="cuda">CUDA (GPU)</option>
+        </select><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
