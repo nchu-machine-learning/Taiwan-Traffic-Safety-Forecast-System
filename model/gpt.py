@@ -153,8 +153,10 @@ def GPT_predict(
     The function uses the Hugging Face `generate` method for autoregressive text generation.
     """
     with torch.no_grad():
+        vocab_size = model.transformer.wte.weight.shape[0] - 2
+        input_ids = torch.tensor([final_segment], device=device, dtype=torch.long).clamp(0, vocab_size)
         outputs = model.generate(
-            input_ids = torch.tensor([final_segment], device=device, dtype=torch.long),
+            input_ids = input_ids,
             max_length = max_length,
             do_sample=True,
             num_return_sequences = num_return_sequences
