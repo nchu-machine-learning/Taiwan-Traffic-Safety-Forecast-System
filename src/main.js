@@ -1,4 +1,4 @@
-// import './assets/main.css'
+import './assets/main.css'
 import './assets/augurio-taiwan.css'
 
 import { createApp } from 'vue'
