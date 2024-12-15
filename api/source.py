@@ -27,7 +27,7 @@ def forecast(
         num_of_days: int = 30,
         device: torch.device = torch.device('cpu'),
         model_params_directory: str = '../output/result/'
-    ) -> tuple[list, str]:
+    ) -> tuple[list, str, list, tuple]:
     '''
     Forecast future values for a specified city using a selected model (ML or LLM-based).
 
@@ -65,9 +65,10 @@ def forecast(
 
     model_params_directory : str, default = '../output/result/'
         The target directory where the GPT model's parameters are placed.
+        
     Returns
     -------
-    tuple[list, str]
+    tuple[list, str, list, tuple]
         A tuple containing:
         
         pred : list
@@ -80,12 +81,18 @@ def forecast(
             The city name represented in pinyin with tone numbers, joined by underscores.
             For example, "臺北市" -> "tai2_bei3_shi4".
 
+        training_data : list
+            The data from the selected city and also used for model training
+
+        date_num : tuple(datetime, datetime)
+            The starting date and ending day for the training dataset
+
     Examples
     --------
     >>> import pickle
     >>> with open('../data/source_data.pkl', 'rb') as f:
     ...     data = pickle.load(f)
-    >>> pred, pinyin_representation = forecast(
+    >>> pred, pinyin_representation, training_data, (start_date, end_date) = forecast(
     ...     df=data,
     ...     city_name='臺北市',
     ...     model_name='GPT',
@@ -142,4 +149,5 @@ def forecast(
         )
         pred = get_desired_sequence_by_len(pred, final_segment, length=num_of_days)
 
-    return pred, roman_repre
+    return pred, roman_repre, training_data.tolist(), (str(date_num[0])[:10], str(date_num[-1])[:10]) 
+    # as the date_num contains a number of datetime-typed elements, we parse them into strings and take the first 7 elements which contain the date information
