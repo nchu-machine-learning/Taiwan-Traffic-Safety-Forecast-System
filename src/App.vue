@@ -10,7 +10,7 @@
                 <div class="absolute inset-px rounded-lg bg-tw-gray" />
                 <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
                     <div class="px-8 py-8 sm:px-10 sm:pt-10">
-                        <p class="mt-2 text-lg font-medium tracking-tight text-tw-dark-gray max-lg:text-center">設置參數</p>
+                        <p class="text-lg font-medium tracking-tight text-tw-dark-gray max-lg:text-center">設置參數</p>
                         <div class="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
                             <div>
                                 <label for="first-name" class="block text-sm/6 font-medium text-tw-dark-gray">縣市</label>
@@ -69,7 +69,7 @@
                 <div class="absolute inset-px rounded-lg bg-tw-gray" />
                 <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
                     <div class="px-8 py-8 sm:px-10 sm:pt-10">
-                        <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">
+                        <p class="text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">
                             交通受傷人數預測結果
                         </p>
                         <Line class="mt-2" id="my-chart-id" :options="chartOptions" :data="chartData" />
