@@ -65,6 +65,7 @@ def forecast(
 
     model_params_directory : str, default = '../output/result/'
         The target directory where the GPT model's parameters are placed.
+        
     Returns
     -------
     tuple[list, str, list, tuple]
