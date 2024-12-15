@@ -4,31 +4,126 @@
             <svg id="svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
         </div>
     </div>
-    <div class="shop-list">
-        <h1>{{ h1 }}</h1>
-        <h2>{{ h2 }}</h2>
-    </div>
-    <!-- <header>
-        <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <div class="taiwan-form flex justify-center align-middle items-center">
+        <div class="p-5 px-10 w-full grid grid-cols-1 gap-4">
+            <div class="relative grid">
+                <div class="absolute inset-px rounded-lg bg-tw-gray" />
+                <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
+                    <div class="px-8 py-8 sm:px-10 sm:pt-10">
+                        <p class="mt-2 text-lg font-medium tracking-tight text-tw-dark-gray max-lg:text-center">設置參數</p>
+                        <div class="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
+                            <div>
+                                <label for="first-name" class="block text-sm/6 font-medium text-tw-dark-gray">縣市</label>
+                                <div class="mt-2">
+                                    <input v-model="h1" type="text" name="first-name" id="first-name"
+                                        autocomplete="given-name"
+                                        class="block w-full h-8 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-tw-yellow sm:text-sm/6"
+                                        disabled />
+                                </div>
+                            </div>
 
-        <div class="wrapper">
-            <HelloWorld msg="You did it!" />
-            <nav>
-                <RouterLink to="/">Home</RouterLink>
-                <RouterLink to="/about">About</RouterLink>
-            </nav>
+                            <div>
+                                <label for="last-name" class="block text-sm/6 font-medium text-tw-dark-gray">模型</label>
+                                <div class="mt-2 bg-white rounded-md px-2">
+                                    <select
+                                        class="block w-full h-8 rounded-md py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                                        name="animals">
+                                        <option value="">
+                                            請選擇模型
+                                        </option>
+                                        <option value="dog">
+                                            GPT
+                                        </option>
+                                        <option value="cat">
+                                            RandomForest
+                                        </option>
+                                        <option value="hamster">
+                                            AdaBoost
+                                        </option>
+                                        <option value="parrot">
+                                            GradientBoost
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-2">
+                            <label class="text-sm/6 font-medium text-tw-dark-gray">預測 </label>
+                            <label class="text-sm/6 font-medium text-tw-dark-gray">30</label>
+                            <label class="text-sm/6 font-medium text-tw-dark-gray"> 天後</label>
+                            <input class="w-full accent-tw-yellow" type="range" name="" value="30" min="30"
+                                max="365" oninput="this.previousElementSibling.previousElementSibling.innerText=this.value" />
+                            <div class="-mt-2 flex w-full justify-between">
+                                <span class="text-sm text-gray-600">30</span>
+                                <span class="text-sm text-gray-600">365</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="mt-2 w-full rounded-md bg-tw-yellow px-3 py-2 text-sm font-semibold text-tw-dark-gray shadow-sm hover:bg-tw-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tw-yellow">開始預測</button>
+                    </div>
+                </div>
+                <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5" />
+            </div>
+            <div class="relative grid">
+                <div class="absolute inset-px rounded-lg bg-tw-gray" />
+                <div class="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
+                    <div class="px-8 py-8 sm:px-10 sm:pt-10">
+                        <p class="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">
+                            交通受傷人數預測結果
+                        </p>
+                        <Line class="mt-2" id="my-chart-id" :options="chartOptions" :data="chartData" />
+                    </div>
+                </div>
+                <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5" />
+            </div>
         </div>
-    </header> -->
-
-    <!-- <RouterView /> -->
+    </div>
 </template>
 
 <script setup>
 import { ref, onMounted, nextTick } from 'vue';
 
-var h1 = ref('縣市中文');
+var h1 = ref('請點選地圖選擇縣市');
 var h2 = ref('縣市英文');
 const map = ref(null);
+
+let chartData = ref({
+    labels: ['106年', '108年', '109年', '110年', '111年'],
+    datasets: [
+        {
+            label: 'Data One',
+            backgroundColor: '#f87979',
+            data: Array.from({ length: 5 }, () => Math.floor(Math.random() * 100))
+        },
+        {
+            label: 'Data Two',
+            backgroundColor: '#78B2D9',
+            data: [40, 39, null, 40, null]
+        },
+    ]
+})
+
+let chartOptions = ref({
+    responsive: true,
+    pointRadius: 5,
+    scales: {
+        x: {
+            display: true,
+            title: {
+                display: true
+            }
+        },
+        y: {
+            display: true,
+            title: {
+                display: true,
+                text: '百分比'
+            }
+        }
+    },
+    spanGaps: true,
+})
 
 const getTaiwanMap = async () => {
     const width = (map.value.offsetWidth).toFixed();
@@ -92,4 +187,22 @@ onMounted(async () => {
     await nextTick();
     getTaiwanMap();
 });
+</script>
+
+<script>
+import { Line } from 'vue-chartjs'
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
+
+export default {
+    name: 'LineChart',
+    components: { Line },
+    data() {
+        return {
+            chartData: this.chartData,
+            chartOptions: this.chartOptions
+        }
+    }
+}
 </script>
