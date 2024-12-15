@@ -23,7 +23,7 @@ def api():
         'lookback': lookback,
         'config': {}
     }
-    forecast_result, text = forecast(
+    forecast_result, text, training_data, (start_date, end_date) = forecast(
         df=df,
         city_name=city_name, 
         model_name=model_name,
@@ -38,8 +38,18 @@ def api():
     else:
         forecast_result_list = [ele[0] for ele in forecast_result]
     response = {
+        
         'forecast_result': forecast_result_list,
-        'text': text
+        'text': text,
+        'training_data': training_data,
+        "training_starting_date": start_date,
+        "training_ending_date": end_date,
+        "notes":  \
+            '''
+                training_starting_date is the earliest date for model training.
+                training_ending_date is the latest date for model training.
+                for testing or predicting, the starting date comes one day after the training_ending_date.    
+            '''
     }
 
     # Return as JSON response

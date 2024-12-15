@@ -1,8 +1,19 @@
+# Introduction
+## The purpose of the system
+* To implement a forecasting system that allows you to choose the models you want to make predictions
+## Components of the repo
+1. Frontend Vue
+2. Backend Flask: for testing, templates\form.html is provided. 
+3. Python notebooks: also for testing, training models, or running experiments.
 # Running the server
 - main.py: main.py contains the flask code is placed
 - Activate the virtual environment containing all the dependencies. In the command, type
 ```bash
 python main.py
+```
+for Linux users, type
+```bash
+python3 main.py
 ```
 in the command
 # Running the Experiment
