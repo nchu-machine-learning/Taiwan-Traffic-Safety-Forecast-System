@@ -157,7 +157,7 @@ const getTaiwanMap = async () => {
         .attr('viewBox', `0 0 ${width} ${height}`);
 
     // 讓 d3 抓 GeoJSON 檔，並寫入 path 的路徑
-    const url = '/taiwan.geojson';
+    const url = '/assets/taiwan.geojson';
     await d3.json(url, (error, geometry) => {
         if (error) throw error;
         svg

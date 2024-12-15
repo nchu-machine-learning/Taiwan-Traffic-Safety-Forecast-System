@@ -4,7 +4,7 @@ import pickle
 import numpy as np
 from api.source import forecast
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='dist', static_folder='dist/assets')
 
 with open('./data/source_data.pkl', 'rb') as f:
     df = pickle.load(f)
@@ -45,9 +45,13 @@ def api():
     # Return as JSON response
     return jsonify(response)
 
+# @app.route('/')
+# def index():
+#     return render_template('form.html')
+
 @app.route('/')
-def index():
-    return render_template('form.html')
+def test():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(port=8000, debug=True)
