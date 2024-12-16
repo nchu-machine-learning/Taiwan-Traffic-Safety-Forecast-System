@@ -1,22 +1,23 @@
 from flask import Flask, request, render_template, jsonify
+from flask_cors import CORS
 import torch
 import pickle
 import numpy as np
 from api.source import forecast
 
 app = Flask(__name__, template_folder='dist', static_folder='dist/assets')
+CORS(app)
 
 with open('./data/source_data.pkl', 'rb') as f:
     df = pickle.load(f)
 
-@app.route('/basic-end-to-end-forecasting', methods=['POST'])
+@app.route('/api', methods=['POST'])
 def api():
-    if request.method == "POST":
-        city_name = request.form.get('city_name', '臺北市')
-        model_name = request.form.get('model_name', 'GPT')
-        lookback = int(request.form.get('lookback', 150))
-        num_of_days = int(request.form.get('num_of_days', 30))
-        device = request.form.get('device', 'cpu')
+    city_name = request.json.get('city_name', '臺北市')
+    model_name = request.json.get('model_name', 'GPT')
+    lookback = int(request.json.get('lookback', 150))
+    num_of_days = int(request.json.get('num_of_days', 30))
+    device = request.json.get('device', 'cpu')
 
     device = torch.device(device)
     params = {
@@ -60,7 +61,7 @@ def api():
 #     return render_template('form.html')
 
 @app.route('/')
-def test():
+def index():
     return render_template('index.html')
 
 if __name__ == '__main__':

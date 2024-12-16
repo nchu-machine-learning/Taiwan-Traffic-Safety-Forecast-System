@@ -11,3 +11,4 @@ scikit-learn
 flask
 python-dotenv
 accelerate
+flask-cors

@@ -13,10 +13,9 @@
                         <p class="text-lg font-medium tracking-tight text-tw-dark-gray max-lg:text-center">設置參數</p>
                         <div class="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2">
                             <div>
-                                <label for="first-name" class="block text-sm/6 font-medium text-tw-dark-gray">縣市</label>
+                                <label for="city_name" class="block text-sm/6 font-medium text-tw-dark-gray">縣市</label>
                                 <div class="mt-2">
-                                    <input v-model="h1" type="text" name="first-name" id="first-name"
-                                        autocomplete="given-name"
+                                    <input v-model="h1" type="text" name="city_name" id="city_name"
                                         class="block w-full h-8 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-tw-yellow sm:text-sm/6"
                                         disabled />
                                 </div>
@@ -25,22 +24,20 @@
                             <div>
                                 <label for="last-name" class="block text-sm/6 font-medium text-tw-dark-gray">模型</label>
                                 <div class="mt-2 bg-white rounded-md px-2">
-                                    <select
-                                        class="block w-full h-8 rounded-md py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                                        name="animals">
+                                    <select id="model_name" name="model_name" class="block w-full h-8 rounded-md py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6">
                                         <option value="">
                                             請選擇模型
                                         </option>
-                                        <option value="dog">
+                                        <option value="GPT">
                                             GPT
                                         </option>
-                                        <option value="cat">
+                                        <option value="RandomForest">
                                             RandomForest
                                         </option>
-                                        <option value="hamster">
+                                        <option value="AdaBoost">
                                             AdaBoost
                                         </option>
-                                        <option value="parrot">
+                                        <option value="GradientBoost">
                                             GradientBoost
                                         </option>
                                     </select>
@@ -52,15 +49,17 @@
                             <label class="text-sm/6 font-medium text-tw-dark-gray">預測 </label>
                             <label class="text-sm/6 font-medium text-tw-dark-gray">30</label>
                             <label class="text-sm/6 font-medium text-tw-dark-gray"> 天後</label>
-                            <input class="w-full accent-tw-yellow" type="range" name="" value="30" min="30"
-                                max="365" oninput="this.previousElementSibling.previousElementSibling.innerText=this.value" />
+                            <input id="num_of_days" name="num_of_days"class="w-full accent-tw-yellow" type="range" value="30" min="30" max="365"
+                                oninput="this.previousElementSibling.previousElementSibling.innerText=this.value" />
                             <div class="-mt-2 flex w-full justify-between">
                                 <span class="text-sm text-gray-600">30</span>
                                 <span class="text-sm text-gray-600">365</span>
                             </div>
                         </div>
 
-                        <button type="submit" class="mt-2 w-full rounded-md bg-tw-yellow px-3 py-2 text-sm font-semibold text-tw-dark-gray shadow-sm hover:bg-tw-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tw-yellow">開始預測</button>
+                        <button type="button"
+                            class="mt-2 w-full rounded-md bg-tw-yellow px-3 py-2 text-sm font-semibold text-tw-dark-gray shadow-sm hover:bg-tw-yellow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tw-yellow"
+                            @click="updateGraph">開始預測</button>
                     </div>
                 </div>
                 <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5" />
@@ -72,7 +71,7 @@
                         <p class="text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">
                             交通受傷人數預測結果
                         </p>
-                        <Line class="mt-2" id="my-chart-id" :options="chartOptions" :data="chartData" />
+                        <LineChart class="mt-2" :data="chartData" :options="chartOptions" />
                     </div>
                 </div>
                 <div class="pointer-events-none absolute inset-px rounded-lg shadow ring-1 ring-black/5" />
@@ -82,48 +81,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref, onMounted, nextTick, reactive } from 'vue';
 
 var h1 = ref('請點選地圖選擇縣市');
 var h2 = ref('縣市英文');
 const map = ref(null);
-
-let chartData = ref({
-    labels: ['106年', '108年', '109年', '110年', '111年'],
-    datasets: [
-        {
-            label: 'Data One',
-            backgroundColor: '#f87979',
-            data: Array.from({ length: 5 }, () => Math.floor(Math.random() * 100))
-        },
-        {
-            label: 'Data Two',
-            backgroundColor: '#78B2D9',
-            data: [40, 39, null, 40, null]
-        },
-    ]
-})
-
-let chartOptions = ref({
-    responsive: true,
-    pointRadius: 5,
-    scales: {
-        x: {
-            display: true,
-            title: {
-                display: true
-            }
-        },
-        y: {
-            display: true,
-            title: {
-                display: true,
-                text: '百分比'
-            }
-        }
-    },
-    spanGaps: true,
-})
 
 const getTaiwanMap = async () => {
     const width = (map.value.offsetWidth).toFixed();
@@ -190,19 +152,99 @@ onMounted(async () => {
 </script>
 
 <script>
-import { Line } from 'vue-chartjs'
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
-
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
+import LineChart from './components/LineChart.vue';
+import axios from 'axios';
 
 export default {
-    name: 'LineChart',
-    components: { Line },
     data() {
         return {
-            chartData: this.chartData,
-            chartOptions: this.chartOptions
-        }
-    }
-}
+            chartData: {
+                labels: [],
+                datasets: [],
+            },
+            chartOptions: {
+                responsive: true,
+                pointRadius: 0,
+                borderWidth: 1,
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: '受傷人數'
+                        },
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                },
+                spanGaps: true,
+            },
+        };
+    },
+    components: {
+        LineChart,
+    },
+
+    methods: {
+        updateGraph() {
+            axios.post('http://127.0.0.1:8000/api', {
+                city_name: document.getElementById('city_name').value,
+                model_name: document.getElementById('model_name').value,
+                num_of_days: document.getElementById('num_of_days').value
+            })
+            .then(response => {
+                // 處理 labels
+                var labels = []
+                var startDate = new Date(response.data['training_starting_date']);
+                var totalDays = 30 + response.data['forecast_result'].length;
+                for(var i = 0; i < totalDays; i++) {
+                    var currentDate = new Date(startDate);
+                    currentDate.setDate(currentDate.getDate() + i);
+                    labels.push(currentDate.toISOString().split('T')[0]); // 格式為 'YYYY-MM-DD'
+                }
+
+                // 處理 datasets
+                var training_data = {};
+                training_data['label'] = "訓練資料";
+                training_data['borderColor'] = "#0284c7";
+                training_data['data'] = [];
+                for(var i = response.data['training_data'].length - 30; i < response.data['training_data'].length; i++) {
+                    training_data['data'].push(response.data['training_data'][i])
+                }
+                for(var i = 0; i < 30; i++) {
+                    training_data['data'].push(null)
+                }
+                var forecast_result = {};
+                forecast_result['label'] = "預測結果";
+                forecast_result['borderColor'] = "#ea580c";
+                forecast_result['data'] = [];
+                for(var i = 0; i < 29; i++) {
+                    forecast_result['data'].push(null)
+                }
+                forecast_result['data'].push(response.data['training_data'][response.data['training_data'].length - 1])
+                for(var i = 0; i < response.data['forecast_result'].length; i++) {
+                    forecast_result['data'].push(response.data['forecast_result'][i])
+                }
+
+                this.chartData = {
+                    labels: labels,
+                    datasets: [
+                        training_data,
+                        forecast_result
+                    ],
+                };
+            })
+            .catch(error => {
+                alert(error);
+            });
+        },
+    },
+};
 </script>
