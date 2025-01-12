@@ -1,4 +1,9 @@
+
+
 # Introduction
+[![View Paper Utilizing Generative Pre-trained Transformers for
+Predictive Modeling of Traffic Casualties in Taiwan](https://img.shields.io/badge/View-Paper-blue)](https://github.com/nchu-machine-learning/Taiwan-Traffic-Safety-Forecast-System/blob/main/paper/Utilizing_Generative_Pre_trained_Transformers_for_Predictive_Modeling_of_Traffic_Casualties_in_Taiwan.pdf)
+
 ## The purpose of the system
 * To implement a forecasting system that allows you to choose the models you want to make predictions
 ## Components of the repo
