@@ -1,7 +1,6 @@
 
 
-# Utilizing Generative Pre-trained Transformers for
-Predictive Modeling of Traffic Casualties in Taiwan
+# Utilizing Generative Pre-trained Transformers for Predictive Modeling of Traffic Casualties in Taiwan
 [![View Paper Utilizing Generative Pre-trained Transformers for
 Predictive Modeling of Traffic Casualties in Taiwan](https://img.shields.io/badge/View-Paper-blue)](https://github.com/nchu-machine-learning/Taiwan-Traffic-Safety-Forecast-System/blob/main/paper/Utilizing_Generative_Pre_trained_Transformers_for_Predictive_Modeling_of_Traffic_Casualties_in_Taiwan.pdf)
 
