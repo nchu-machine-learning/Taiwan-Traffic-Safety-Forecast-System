@@ -48,3 +48,7 @@ pip install -r requirements.txt
 # Reference
 This repository used the GPT-2 model from hugging face.
 [https://huggingface.co/docs/transformers/model_doc/gpt2](https://huggingface.co/docs/transformers/model_doc/gpt2)
+
+This repository used the Taiwan map visualization code from letswritetw.
+[https://github.com/letswritetw/letswrite-taiwan-map-basic](https://github.com/letswritetw/letswrite-taiwan-map-basic)
+
